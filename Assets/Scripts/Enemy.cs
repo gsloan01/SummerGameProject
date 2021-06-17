@@ -6,10 +6,14 @@ public class Enemy : MonoBehaviour
 {
     public AudioClip death;
     public float viewDistance = 35.0f;
-    [Range(0, 360)] public float viewAngle = 90;
+    public Transform eyeLocator;
+    //[Range(0, 360)] public float viewAngle = 90;
+
+
+
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag("PlayerWeapon"))
+        if(collision.gameObject.CompareTag("PlayerAttack"))
         {
             Die();
         }
@@ -25,13 +29,41 @@ public class Enemy : MonoBehaviour
     private void Update()
     {
         //look for player
+        LookForPlayer();
         //if player is found
             //shoot player on an interval
     }
 
     bool LookForPlayer()
     {
-        //if player is within a certain distance && if player is within viewing angle
+        
+        //if player is within a certain distance 
+        if(Vector3.Distance(transform.position, GameController.Instance.player.transform.position) <= viewDistance)
+        {
+            RaycastHit hit;
+            Ray ray = new Ray(eyeLocator.position, (GameController.Instance.transform.position - eyeLocator.position));
+            if (Physics.Raycast(eyeLocator.position, ray.direction, out hit))
+            {
+                Debug.Log("Hit " + hit.collider.name);
+                Debug.DrawRay(eyeLocator.position, GameController.Instance.player.transform.position, Color.white);
+                //hit.collider.gameObject.GetComponent<MeshRenderer>().material.color = Color.blue;
+                if (hit.collider.tag != "Player")
+                {
+                    
+                    Debug.Log("Did not Hit");
+                }
+                else if(hit.collider.CompareTag("Player"))
+                {
+                    Debug.Log("Hit");
+                }
+
+            }
+            else
+            {
+
+            }
+
+        }
             //check if a raycast from this enemy to the player hits the player
             //if so, player has been found return true
         return false;
