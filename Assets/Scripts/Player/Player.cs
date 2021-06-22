@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public Movement movement;
     public float walkSpeed = 2.5f;
     public float sprintSpeed = 5.0f;
+    public float drag = 0.95f;
+    
+    Vector3 velocity = Vector3.zero;
 
     void Start()
     {
-        
     }
 
     void Update()
@@ -21,15 +22,15 @@ public class Player : MonoBehaviour
 
         //Movement controls
         Vector3 direction = Vector3.zero;
-        direction.x += Input.GetAxis("Horizontal") * currentSpeed;
-        direction.y = 1;
-        direction.z += Input.GetAxis("Vertical") * currentSpeed;
+        direction.x = Input.GetAxis("Horizontal");
+        direction.z = Input.GetAxis("Vertical");
 
-        if (movement != null)
+        if (direction != Vector3.zero)
         {
-            movement.speedMax = currentSpeed;
-            movement.MoveTowards(direction);
-            if (direction == Vector3.zero) movement.Stop();
+            velocity = direction * currentSpeed;
         }
+        velocity *= drag;
+
+        transform.position += velocity * Time.deltaTime;
     }
 }
