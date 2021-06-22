@@ -132,7 +132,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 508225800}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: EYES
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -689,7 +689,7 @@ GameObject:
   - component: {fileID: 2077567415}
   - component: {fileID: 2077567414}
   - component: {fileID: 2077567418}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -789,3 +789,6 @@ MonoBehaviour:
   death: {fileID: 0}
   viewDistance: 5
   eyeLocator: {fileID: 508225800}
+  projectileSpeed: 5
+  projectile: {fileID: 1093486218120135172, guid: 5041b56df83c8d649838ddd51083ff62, type: 3}
+  shootInterval: 1

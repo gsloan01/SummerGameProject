@@ -8,8 +8,13 @@ public class Enemy : MonoBehaviour
     public float viewDistance = 35.0f;
     public Transform eyeLocator;
     //[Range(0, 360)] public float viewAngle = 90;
+    public float projectileSpeed = 5;
+    public GameObject projectile;
 
+    bool playerSighted;
 
+    float shootTimer = 0;
+    public float shootInterval = 1;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -28,44 +33,68 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            Shoot();
+        }
         //look for player
         LookForPlayer();
+        if(playerSighted)
+        {
+            shootTimer += Time.deltaTime;
+            if(shootTimer >= shootInterval)
+            {
+                Shoot();
+            }
+        }
+        else
+        {
+            shootTimer = 0.0f;
+        }
         //if player is found
             //shoot player on an interval
     }
 
-    bool LookForPlayer()
+    void Shoot()
+    {
+        shootTimer = 0;
+        //create a bullet that travels in the direction of the player
+        GameObject bullet = Instantiate(projectile, transform, false);
+        Vector3 direction = GameController.Instance.player.transform.position - transform.position;
+        bullet.GetComponent<Rigidbody>().AddForce((direction * projectileSpeed), ForceMode.Impulse);
+    }
+
+    void LookForPlayer()
     {
         
         //if player is within a certain distance 
         if(Vector3.Distance(transform.position, GameController.Instance.player.transform.position) <= viewDistance)
         {
             RaycastHit hit;
-            Ray ray = new Ray(eyeLocator.position, (GameController.Instance.transform.position - eyeLocator.position));
+            Ray ray = new Ray(eyeLocator.position, (GameController.Instance.player.transform.position - eyeLocator.position));
+            Debug.DrawRay(eyeLocator.position, GameController.Instance.player.transform.position - eyeLocator.position);
+            //if raycast hit anything
             if (Physics.Raycast(eyeLocator.position, ray.direction, out hit))
             {
+                //see what im hitting
                 Debug.Log("Hit " + hit.collider.name);
-                Debug.DrawRay(eyeLocator.position, GameController.Instance.player.transform.position, Color.white);
+                //Debug.DrawRay(eyeLocator.position, GameController.Instance.player.transform.position, Color.white);
                 //hit.collider.gameObject.GetComponent<MeshRenderer>().material.color = Color.blue;
-                if (hit.collider.tag != "Player")
+                //if i hit the player, set sighted to true, otherwise, false
+                if (hit.collider.tag == "Player")
                 {
-                    
-                    Debug.Log("Did not Hit");
-                }
-                else if(hit.collider.CompareTag("Player"))
-                {
+                    playerSighted = true;
                     Debug.Log("Hit");
                 }
+                else 
+                {
+                    playerSighted = false;
+                }
 
             }
-            else
-            {
 
-            }
 
         }
-            //check if a raycast from this enemy to the player hits the player
-            //if so, player has been found return true
-        return false;
+
     }
 }
