@@ -332,8 +332,8 @@ MonoBehaviour:
   walkSpeed: 2.5
   sprintSpeed: 5
   drag: 0.95
-  maxTiltAngle: 25
-  tiltSpeed: 2.5
+  maxTiltAngle: 10
+  tiltSpeed: 50
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
