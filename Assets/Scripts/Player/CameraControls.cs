@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class CameraControls : MonoBehaviour
 {
-    float upDownRotation = 0;
-    public float sensitivity = 90;
     public Transform player;
+    public float sensitivity = 90.0f;
+
+    float upDownRotation = 0; 
 
     // Start is called before the first frame update
     void Start()
@@ -24,8 +25,44 @@ public class CameraControls : MonoBehaviour
         upDownRotation -= mouseY;
         upDownRotation = Mathf.Clamp(upDownRotation, -90, 90);
 
-        transform.localEulerAngles = new Vector3(upDownRotation, 0, 0);
+        //transform.localEulerAngles = new Vector3(upDownRotation, 0, 0);
+        Tilt('x', upDownRotation);
         player.Rotate(Vector3.up * mouseX);
+    }
 
+    public void Tilt(char axis, float angle)
+    {
+        switch (axis)
+        {
+            case 'x':
+                transform.localEulerAngles = new Vector3(angle, transform.localEulerAngles.y, transform.localEulerAngles.z);
+                break;
+            case 'y':
+                transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, angle, transform.localEulerAngles.z);
+                break;
+            case 'z':
+                transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, angle);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void ResetTilt(char axis)
+    {
+        switch (axis)
+        {
+            case 'x':
+                transform.localEulerAngles = new Vector3(0, transform.localEulerAngles.y, transform.localEulerAngles.z);
+                break;
+            case 'y':
+                transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, 0, transform.localEulerAngles.z);
+                break;
+            case 'z':
+                transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, 0);
+                break;
+            default:
+                break;
+        }
     }
 }

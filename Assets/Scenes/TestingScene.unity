@@ -332,6 +332,8 @@ MonoBehaviour:
   walkSpeed: 2.5
   sprintSpeed: 5
   drag: 0.95
+  maxTiltAngle: 25
+  tiltSpeed: 2.5
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -521,8 +523,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0695d4d70f1365d49bfd41d0dfd670b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensitivity: 115
   player: {fileID: 658643100}
+  sensitivity: 125
 --- !u!1 &1502786559
 GameObject:
   m_ObjectHideFlags: 0
