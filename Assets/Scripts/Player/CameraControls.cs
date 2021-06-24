@@ -9,14 +9,12 @@ public class CameraControls : MonoBehaviour
 
     float upDownRotation = 0; 
 
-    // Start is called before the first frame update
     void Start()
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    // Update is called once per frame
     void Update()
     {
         float mouseX = Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
@@ -25,7 +23,6 @@ public class CameraControls : MonoBehaviour
         upDownRotation -= mouseY;
         upDownRotation = Mathf.Clamp(upDownRotation, -90, 90);
 
-        //transform.localEulerAngles = new Vector3(upDownRotation, 0, 0);
         Tilt('x', upDownRotation);
         player.Rotate(Vector3.up * mouseX);
     }

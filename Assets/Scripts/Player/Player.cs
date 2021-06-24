@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
         float currentSpeed = walkSpeed;
         if (Input.GetKey(KeyCode.LeftShift)) currentSpeed = sprintSpeed;
 
+
         //Movement controls
         Vector3 direction = Vector3.zero;
         direction.x = Input.GetAxis("Horizontal");
@@ -30,29 +31,33 @@ public class Player : MonoBehaviour
 
         if (direction != Vector3.zero)
         {
-            velocity = direction * currentSpeed;
+            velocity = transform.TransformDirection(direction) * currentSpeed;
         }
         velocity *= drag;
 
         transform.position += velocity * Time.deltaTime;
 
+
         //Camera tilt
-        if (direction.x != 0)
+        float tiltDirection = direction.normalized.x;
+        if (tiltDirection != 0)
         {
-            tiltAngle -= direction.x * tiltSpeed * Time.deltaTime;
-            Mathf.Clamp(tiltAngle, -maxTiltAngle, maxTiltAngle);
+            tiltAngle -= tiltDirection * tiltSpeed * Time.deltaTime;
+            tiltAngle = Mathf.Clamp(tiltAngle, -maxTiltAngle, maxTiltAngle);
+            GetComponentInChildren<CameraControls>().Tilt('z', tiltAngle);
         }
         else
         {
             if (tiltAngle <= -0.1f || tiltAngle >= 0.1f)
             {
                 tiltAngle -= tiltAngle * tiltSpeed * Time.deltaTime;
+                GetComponentInChildren<CameraControls>().Tilt('z', tiltAngle);
             }
             else
             {
                 tiltAngle = 0;
+                GetComponentInChildren<CameraControls>().ResetTilt('z');
             }
         }
-        GetComponentInChildren<CameraControls>().Tilt('z', tiltAngle);
     }
 }
