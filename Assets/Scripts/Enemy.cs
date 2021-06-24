@@ -11,6 +11,14 @@ public class Enemy : MonoBehaviour
     public float projectileSpeed = 5;
     public GameObject projectile;
 
+
+    public enum WeaponType
+    {
+        Pistol, Burst, Sniper, Shotgun
+    }
+
+    public WeaponType weapon = WeaponType.Pistol;
+
     bool playerSighted;
 
     float shootTimer = 0;
@@ -33,10 +41,7 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            Shoot();
-        }
+
         //look for player
         LookForPlayer();
         if(playerSighted)
