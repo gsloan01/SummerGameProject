@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public PlayerWeapon weapon;
+
     public float walkSpeed = 2.5f;
     public float sprintSpeed = 5.0f;
     public float drag = 0.95f;
@@ -59,5 +61,9 @@ public class Player : MonoBehaviour
                 GetComponentInChildren<CameraControls>().ResetTilt('z');
             }
         }
+
+        //Shooting
+        if (Input.GetMouseButton(0)) weapon?.Shoot();
+        if (Input.GetKeyDown(KeyCode.R)) weapon?.Reload();
     }
 }
