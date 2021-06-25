@@ -39,6 +39,7 @@ public class Player : MonoBehaviour
 
         transform.position += velocity * Time.deltaTime;
 
+        Debug.DrawRay(transform.position, transform.forward);
 
         //Camera tilt
         float tiltDirection = direction.normalized.x;
