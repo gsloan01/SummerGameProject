@@ -9,14 +9,21 @@ public class Player : MonoBehaviour
     public float walkSpeed = 2.5f;
     public float sprintSpeed = 5.0f;
     public float drag = 0.95f;
+    public float jumpHeight = 5.0f;
+    public float boostDistance = 10.0f;
     public float maxTiltAngle = 45.0f;
     public float tiltSpeed = 1.0f;
-    
+    public float boostCooldownTime = 2.0f;
+
+    Rigidbody rb;
     Vector3 velocity = Vector3.zero;
     float tiltAngle = 0;
+    float boostCooldownTimer = 0;
+    bool onGround = true;
 
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
     }
 
     void Update()
@@ -39,6 +46,26 @@ public class Player : MonoBehaviour
 
         transform.position += velocity * Time.deltaTime;
 
+
+        //Jump
+        onGround = (rb.velocity.y == 0);
+        if (Input.GetKeyDown(KeyCode.Space) && onGround)
+        {
+            rb.AddForce(Vector3.up * jumpHeight, ForceMode.VelocityChange);
+        }
+
+
+        //Boost
+        boostCooldownTimer -= Time.deltaTime;
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            if (boostCooldownTimer <= 0)
+            {
+                Vector3 boostDirection = GetComponentInChildren<CameraControls>().transform.forward;
+                rb.AddForce(boostDirection * boostDistance, ForceMode.VelocityChange);
+                boostCooldownTimer = boostCooldownTime;
+            }
+        }
 
         //Camera tilt
         float tiltDirection = direction.normalized.x;
@@ -64,6 +91,6 @@ public class Player : MonoBehaviour
 
         //Shooting
         if (Input.GetMouseButton(0)) weapon?.Shoot();
-        if (Input.GetKeyDown(KeyCode.R)) weapon?.Reload();
+        if (Input.GetKeyDown(KeyCode.R)) weapon?.Reload(); 
     }
 }

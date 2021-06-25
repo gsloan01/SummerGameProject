@@ -62,4 +62,6 @@ public class CameraControls : MonoBehaviour
                 break;
         }
     }
+
+    
 }
