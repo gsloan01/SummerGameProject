@@ -48,6 +48,7 @@ public class Player : MonoBehaviour
 
         transform.position += velocity * Time.deltaTime;
 
+        Debug.DrawRay(transform.position, transform.forward);
 
         //Jump
         onGround = (rb.velocity.y == 0);

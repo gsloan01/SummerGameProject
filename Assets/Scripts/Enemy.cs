@@ -26,10 +26,10 @@ public class Enemy : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag("PlayerAttack"))
-        {
-            Die();
-        }
+        //if(collision.gameObject.CompareTag("PlayerAttack"))
+        //{
+        //    Die();
+        //}
     }
     public void Die()
     {
