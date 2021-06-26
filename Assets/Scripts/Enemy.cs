@@ -26,14 +26,17 @@ public class Enemy : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        //if(collision.gameObject.CompareTag("PlayerAttack"))
-        //{
-        //    Die();
-        //}
+        Debug.Log("Colliding with " + collision.gameObject.name) ;
+        if(collision.gameObject.CompareTag("PlayerAttack"))
+        {
+            Die();
+        }
     }
     public void Die()
     {
         //delete this
+        Debug.Log("Enemy died!");
+        Destroy(this);
         //make death sound
         //spawn blood effect
         //spawn ragdoll
