@@ -7,7 +7,7 @@ public class MainMenu : MonoBehaviour
 {
     void Start()
     {
-        MenuGameController.Instance.OnTitleScreen();
-        MenuGameController.Instance.transition.StartTransition(Color.clear, 1);
+        MenuController.Instance.OnTitleScreen();
+        MenuController.Instance.transition.StartTransition(Color.clear, 1);
     }
 }

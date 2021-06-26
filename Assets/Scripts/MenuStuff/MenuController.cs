@@ -5,11 +5,12 @@ using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class MenuGameController : MonoBehaviour
+public class MenuController : MonoBehaviour
 {
     public GameObject titleScreen;
     public GameObject optionsScreen;
     public GameObject pauseScreen;
+    public MenuScreen winLoseScreen;
     public Transition transition;
 
     public AudioMixer audioMixer;
@@ -18,13 +19,15 @@ public class MenuGameController : MonoBehaviour
     public Slider MusicSlider;
     public Slider SFXSlider;
 
-    public int highScore = 0;
+    public List<string> levelNames = new List<string>();
 
     bool isPaused = false;
     float timeScale;
+    int currentLevel = 0;
+    bool lastLevel = false;
 
-    static MenuGameController instance = null;
-    public static MenuGameController Instance { get { return instance; } }
+    static MenuController instance = null;
+    public static MenuController Instance { get { return instance; } }
 
     void Awake()
     {
@@ -34,8 +37,6 @@ public class MenuGameController : MonoBehaviour
 
     void Start()
     {
-        highScore = PlayerPrefs.GetInt("HighScore", 0);
-
         float masterVolume = PlayerPrefs.GetFloat("MasterVolume", 0);
         audioMixer.SetFloat("MasterVolume", masterVolume);
         MasterSlider.value = masterVolume;
@@ -47,12 +48,6 @@ public class MenuGameController : MonoBehaviour
         float sfxVolume = PlayerPrefs.GetFloat("SFXVolume", 0);
         audioMixer.SetFloat("SFXVolume", sfxVolume);
         SFXSlider.value = sfxVolume;
-    }
-
-    public void SetHighScore(int score)
-    {
-        highScore = score;
-        PlayerPrefs.SetInt("HighScore", highScore);
     }
 
     public void OnLoadGameScene(string sceneName)
@@ -75,6 +70,23 @@ public class MenuGameController : MonoBehaviour
         yield return null;
     }
 
+    public void OnReloadCurrentScene()
+    {
+        winLoseScreen.gameObject.SetActive(false);
+        OnLoadGameScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void OnLoadNextLevelScene()
+    {
+        winLoseScreen.gameObject.SetActive(false);
+        currentLevel++;
+        if (currentLevel == levelNames.Count - 1) lastLevel = true;
+        if (currentLevel >= 0 && currentLevel < levelNames.Count)
+        {
+            string levelName = levelNames[currentLevel];
+            OnLoadGameScene("");
+        }
+    }
 
     public void OnLoadMenuScene(string sceneName)
     {
@@ -141,21 +153,43 @@ public class MenuGameController : MonoBehaviour
         OnPauseScreen();
     }
 
+    public void OnWinScreen()
+    {
+        winLoseScreen.gameObject.SetActive(true);
+        winLoseScreen.GetText("Win").gameObject.SetActive(true);
+        winLoseScreen.GetText("Lose").gameObject.SetActive(false);
+        winLoseScreen.GetButton("Continue").gameObject.SetActive(!lastLevel);
+        winLoseScreen.GetButton("Retry").gameObject.SetActive(true);
+        winLoseScreen.GetButton("Quit").gameObject.SetActive(true);
+    }
+
+    public void OnLoseScreen()
+    {
+        winLoseScreen.gameObject.SetActive(true);
+        winLoseScreen.GetText("Win").gameObject.SetActive(false);
+        winLoseScreen.GetText("Lose").gameObject.SetActive(true);
+        winLoseScreen.GetButton("Continue").gameObject.SetActive(false);
+        winLoseScreen.GetButton("Retry").gameObject.SetActive(true);
+        winLoseScreen.GetButton("Quit").gameObject.SetActive(true);
+    }
+
     public void OnMasterVolume(float level)
     {
-        audioMixer.SetFloat("MasterVolume", level);
+        audioMixer?.SetFloat("MasterVolume", level);
         PlayerPrefs.SetFloat("MasterVolume", level);
     }
 
     public void OnMusicVolume(float level)
     {
-        audioMixer.SetFloat("MusicVolume", level);
+        audioMixer?.SetFloat("MusicVolume", level);
         PlayerPrefs.SetFloat("MusicVolume", level);
     }
 
     public void OnSFXVolume(float level)
     {
-        audioMixer.SetFloat("SFXVolume", level);
+        audioMixer?.SetFloat("SFXVolume", level);
         PlayerPrefs.SetFloat("SFXVolume", level);
     }
+
+
 }
