@@ -4,26 +4,28 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public PlayerWeapon weapon;
+    public List<PlayerWeapon> weapons;
 
     public float walkSpeed = 2.5f;
     public float sprintSpeed = 5.0f;
     public float drag = 0.95f;
     public float jumpHeight = 5.0f;
     public float boostDistance = 10.0f;
+    public float boostCooldownTime = 2.0f;
     public float maxTiltAngle = 45.0f;
     public float tiltSpeed = 1.0f;
-    public float boostCooldownTime = 2.0f;
 
     Rigidbody rb;
     Vector3 velocity = Vector3.zero;
     float tiltAngle = 0;
     float boostCooldownTimer = 0;
     bool onGround = true;
+    PlayerWeapon weapon;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        if (weapons.Count > 0) weapon = weapons[0];
     }
 
     void Update()
@@ -90,8 +92,15 @@ public class Player : MonoBehaviour
             }
         }
 
+        //Weapon Swap
+        weapon = weapons[0];
+
         //Shooting
-        if (Input.GetMouseButton(0)) weapon?.Shoot();
-        if (Input.GetKeyDown(KeyCode.R)) weapon?.Reload(); 
+        if (weapon)
+        {
+            bool shooting = (weapon.fullAuto) ? Input.GetMouseButton(0) : Input.GetMouseButtonDown(0);
+            if (shooting) weapon.Shoot();
+            if (Input.GetKeyDown(KeyCode.R)) weapon.Reload(); 
+        }
     }
 }
