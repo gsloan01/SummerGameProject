@@ -9,9 +9,12 @@ public class PlayerWeapon : MonoBehaviour
 
     public float cooldown = 1;
     public float magSize = 30;
+    public float shotDeviance = 1;
 
-    float magCount;
-    float cooldownTimer;
+    public bool fullAuto = false;
+
+    protected float magCount;
+    protected float cooldownTimer;
 
     void Start()
     {
@@ -23,18 +26,24 @@ public class PlayerWeapon : MonoBehaviour
         cooldownTimer -= Time.deltaTime;
     }
 
-    public void Shoot()
+    public virtual void Shoot()
     {
-        if (cooldownTimer <= 0)
+        if (cooldownTimer <= 0 && magCount > 0)
         {
-            cooldownTimer = cooldown;
-            Instantiate(projectile, projectileSpawn.position, transform.rotation);
+            SpawnProjectile();
             magCount--;
+            cooldownTimer = cooldown;
             Debug.Log("Shoot: " + magCount);
         }
     }
 
-    public void Reload()
+    public void SpawnProjectile()
+    {
+        Quaternion projectileRotation = Quaternion.Euler(Random.insideUnitCircle * shotDeviance) * transform.rotation;
+        Instantiate(projectile, projectileSpawn.position, projectileRotation);
+    }
+
+    public virtual void Reload()
     {
         if (magCount < magSize)
         {
