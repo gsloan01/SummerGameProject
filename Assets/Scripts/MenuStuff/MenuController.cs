@@ -65,7 +65,10 @@ public class MenuController : MonoBehaviour
         while (!transition.IsDone) { yield return null; }
 
         titleScreen.SetActive(false);
-        SceneManager.LoadScene(sceneName);
+        if (SceneManager.GetSceneByName(sceneName).IsValid())
+        {
+            SceneManager.LoadScene(sceneName);
+        }
 
         yield return null;
     }
@@ -84,7 +87,7 @@ public class MenuController : MonoBehaviour
         if (currentLevel >= 0 && currentLevel < levelNames.Count)
         {
             string levelName = levelNames[currentLevel];
-            OnLoadGameScene("");
+            OnLoadGameScene(levelName);
         }
     }
 
@@ -103,11 +106,13 @@ public class MenuController : MonoBehaviour
         while (!transition.IsDone) { yield return null; }
 
         titleScreen.SetActive(true);
-        SceneManager.LoadScene(sceneName);
+        if (SceneManager.GetSceneByName(sceneName).IsValid())
+        {
+            SceneManager.LoadScene(sceneName);
+        }
 
         yield return null;
     }
-
 
     public void OnTitleScreen()
     {
@@ -155,6 +160,8 @@ public class MenuController : MonoBehaviour
 
     public void OnWinScreen()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         winLoseScreen.gameObject.SetActive(true);
         winLoseScreen.GetText("Win").gameObject.SetActive(true);
         winLoseScreen.GetText("Lose").gameObject.SetActive(false);
@@ -165,6 +172,8 @@ public class MenuController : MonoBehaviour
 
     public void OnLoseScreen()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         winLoseScreen.gameObject.SetActive(true);
         winLoseScreen.GetText("Win").gameObject.SetActive(false);
         winLoseScreen.GetText("Lose").gameObject.SetActive(true);
