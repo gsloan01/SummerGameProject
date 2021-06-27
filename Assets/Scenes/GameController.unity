@@ -799,18 +799,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 372387029}
         m_TargetAssemblyTypeName: GameController, Assembly-CSharp
-        m_MethodName: OnPause
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: MainMenu
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 372387029}
-        m_TargetAssemblyTypeName: GameController, Assembly-CSharp
         m_MethodName: OnLoadMenuScene
         m_Mode: 5
         m_Arguments:
@@ -1122,6 +1110,7 @@ MonoBehaviour:
   optionsScreen: {fileID: 1586116003}
   pauseScreen: {fileID: 368774606}
   winLoseScreen: {fileID: 16033241}
+  titleScreenTest: {fileID: 2146204318}
   transition: {fileID: 372387033}
   audioMixer: {fileID: 24100000, guid: 38aaf25faf4b81d458609bf9a150fc08, type: 2}
   MasterSlider: {fileID: 1072479155}
@@ -3764,18 +3753,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 372387029}
         m_TargetAssemblyTypeName: GameController, Assembly-CSharp
-        m_MethodName: OnPause
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: MainMenu
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 372387029}
-        m_TargetAssemblyTypeName: GameController, Assembly-CSharp
         m_MethodName: OnLoadMenuScene
         m_Mode: 5
         m_Arguments:
@@ -4168,7 +4145,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: LevelOne
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
 --- !u!114 &1629150202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4806,6 +4783,7 @@ GameObject:
   - component: {fileID: 2146204315}
   - component: {fileID: 2146204317}
   - component: {fileID: 2146204316}
+  - component: {fileID: 2146204318}
   m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
@@ -4873,3 +4851,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2146204314}
   m_CullTransparentMesh: 0
+--- !u!114 &2146204318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2146204314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d1b9876d814fd14baee6cc01103d0f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textNames:
+  - GameName
+  texts:
+  - {fileID: 1789242145}
+  buttonNames:
+  - Start
+  - Options
+  buttons:
+  - {fileID: 1629150201}
+  - {fileID: 1363434154}

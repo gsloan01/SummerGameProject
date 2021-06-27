@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public List<PlayerWeapon> weapons;
+    public Transform weaponLocator;
 
     public float walkSpeed = 2.5f;
     public float sprintSpeed = 5.0f;
@@ -14,18 +15,21 @@ public class Player : MonoBehaviour
     public float boostCooldownTime = 2.0f;
     public float maxTiltAngle = 45.0f;
     public float tiltSpeed = 1.0f;
+    public float weaponSwapTime = 1.5f;
 
     Rigidbody rb;
     Vector3 velocity = Vector3.zero;
+    bool onGround = true;
     float tiltAngle = 0;
     float boostCooldownTimer = 0;
-    bool onGround = true;
-    PlayerWeapon weapon;
+    float weaponSwapTimer = 0;
+    int weaponIndex = 0;
+    PlayerWeapon currentWeapon;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        if (weapons.Count > 0) weapon = weapons[0];
+        if (weapons.Count > 0) currentWeapon = Instantiate(weapons[weaponIndex], weaponLocator.position, weaponLocator.rotation, weaponLocator);
     }
 
     void Update()
@@ -93,14 +97,25 @@ public class Player : MonoBehaviour
         }
 
         //Weapon Swap
-        weapon = weapons[0];
+        weaponSwapTimer -= Time.deltaTime;
+        if (weaponSwapTimer <= 0)
+        {
+            Vector2 mouseDelta = Input.mouseScrollDelta;
+            if (mouseDelta != Vector2.zero)
+            {
+                Destroy(currentWeapon?.gameObject);
+                if (mouseDelta.y > 0) weaponIndex++;
+                else if (mouseDelta.y < 0) weaponIndex--;
+                if (weapons.Count > 0) currentWeapon = Instantiate(weapons[Mathf.Abs(weaponIndex % (weapons.Count))], weaponLocator.position, weaponLocator.rotation, weaponLocator);
+            }
+        }
 
         //Shooting
-        if (weapon)
+        if (currentWeapon != null)
         {
-            bool shooting = (weapon.fullAuto) ? Input.GetMouseButton(0) : Input.GetMouseButtonDown(0);
-            if (shooting) weapon.Shoot();
-            if (Input.GetKeyDown(KeyCode.R)) weapon.Reload(); 
+            bool shooting = (currentWeapon.fullAuto) ? Input.GetMouseButton(0) : Input.GetMouseButtonDown(0);
+            if (shooting) currentWeapon.Shoot();
+            if (Input.GetKeyDown(KeyCode.R)) currentWeapon.Reload(); 
         }
     }
 }

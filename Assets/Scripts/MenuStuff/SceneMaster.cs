@@ -15,7 +15,6 @@ public class SceneMaster : MonoBehaviour
             if (gameObject == null)
             {
                 SceneManager.LoadScene(scene.name, LoadSceneMode.Additive);
-
             }
         }
     }

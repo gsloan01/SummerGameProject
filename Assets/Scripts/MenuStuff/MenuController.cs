@@ -11,6 +11,7 @@ public class MenuController : MonoBehaviour
     public GameObject optionsScreen;
     public GameObject pauseScreen;
     public MenuScreen winLoseScreen;
+    public MenuScreen titleScreenTest;
     public Transition transition;
 
     public AudioMixer audioMixer;
@@ -60,15 +61,12 @@ public class MenuController : MonoBehaviour
 
     IEnumerator LoadGameScene(string sceneName)
     {
-        transition.StartTransition(Color.black, 1);
+        //transition.StartTransition(Color.black, 1);
 
-        while (!transition.IsDone) { yield return null; }
+        //while (!transition.IsDone) { yield return null; }
 
         titleScreen.SetActive(false);
-        if (SceneManager.GetSceneByName(sceneName).IsValid())
-        {
-            SceneManager.LoadScene(sceneName);
-        }
+        SceneManager.LoadScene(sceneName);
 
         yield return null;
     }
@@ -93,35 +91,36 @@ public class MenuController : MonoBehaviour
 
     public void OnLoadMenuScene(string sceneName)
     {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-
+        if (sceneName == "MainMenu")
+        {
+            OnTitleScreen();
+        }
         StartCoroutine(LoadMenuScene(sceneName));
     }
 
     IEnumerator LoadMenuScene(string sceneName)
     {
-        transition.StartTransition(Color.black, 1);
+        //transition.StartTransition(Color.black, 1);
 
-        while (!transition.IsDone) { yield return null; }
+        //while (!transition.IsDone) { yield return null; }
 
-        titleScreen.SetActive(true);
-        if (SceneManager.GetSceneByName(sceneName).IsValid())
-        {
-            SceneManager.LoadScene(sceneName);
-        }
+        
+        SceneManager.LoadScene(sceneName);
 
         yield return null;
     }
 
     public void OnTitleScreen()
     {
-        titleScreen?.SetActive(true);
-
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
+        titleScreen?.SetActive(true);
+        titleScreenTest?.GetButton("Start")?.gameObject.SetActive(true);
+
         optionsScreen?.SetActive(false);
+        pauseScreen?.SetActive(false);
+        winLoseScreen.gameObject?.SetActive(false);
     }
 
     public void OnOptionsScreen()
