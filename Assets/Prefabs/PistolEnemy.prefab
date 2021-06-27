@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1193893826544952640}
   m_Layer: 3
   m_Name: PistolEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -115,6 +115,7 @@ MonoBehaviour:
   eyeLocator: {fileID: 1193893828094961138}
   projectileSpeed: 5
   projectile: {fileID: 1093486218120135172, guid: 5041b56df83c8d649838ddd51083ff62, type: 3}
+  health: 1
   weapon: 0
   shootInterval: 1.4
 --- !u!1 &1193893828094961149

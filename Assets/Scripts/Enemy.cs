@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     //[Range(0, 360)] public float viewAngle = 90;
     public float projectileSpeed = 5;
     public GameObject projectile;
+    public float health = 1;
 
 
     public enum WeaponType
@@ -24,14 +25,17 @@ public class Enemy : MonoBehaviour
     float shootTimer = 0;
     public float shootInterval = 1;
 
-    private void OnCollisionEnter(Collision collision)
+    public void Hurt(float damage)
     {
-        Debug.Log("Colliding with " + collision.gameObject.name) ;
-        if(collision.gameObject.CompareTag("PlayerAttack"))
+        health -= damage;
+        //hurt notification
+        Debug.Log("Enemy has been hurt!");
+        if(health <= 0)
         {
             Die();
         }
     }
+
     public void Die()
     {
         //delete this
