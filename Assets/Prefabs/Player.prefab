@@ -272,7 +272,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapons:
-  - {fileID: 0}
+  - {fileID: 3245869995896670734, guid: 5c05c0c2f289a774ca1b8a5bad0453f9, type: 3}
+  - {fileID: 2491239437809796628, guid: 438ae3891908544428aaf2989c8086a5, type: 3}
+  - {fileID: -4165916369333272815, guid: fbab3174d05151141b8a86022582ae4e, type: 3}
+  - {fileID: 3245869995896670734, guid: d5ffaed66227b9948bdf13b014e0a541, type: 3}
   weaponLocator: {fileID: 32170263}
   walkSpeed: 5
   sprintSpeed: 9
@@ -283,6 +286,7 @@ MonoBehaviour:
   maxTiltAngle: 10
   tiltSpeed: 50
   weaponSwapTime: 1.5
+  maxHealth: 5
 --- !u!54 &658643097
 Rigidbody:
   m_ObjectHideFlags: 0
