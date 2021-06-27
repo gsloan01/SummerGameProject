@@ -23,6 +23,7 @@ public class Projectile : MonoBehaviour
         Debug.Log(collision.gameObject.name);
         if(collision.gameObject.CompareTag("Enemy"))
         {
+            Debug.Log("hit enemy");
             collision.gameObject.GetComponent<Enemy>().Hurt(damage);
         }
     }

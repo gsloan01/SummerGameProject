@@ -16,10 +16,12 @@ public class Player : MonoBehaviour
     public float maxTiltAngle = 45.0f;
     public float tiltSpeed = 1.0f;
     public float weaponSwapTime = 1.5f;
+    public float maxHealth = 5;
 
     Rigidbody rb;
     Vector3 velocity = Vector3.zero;
     bool onGround = true;
+    float currentHealth = 5;
     float tiltAngle = 0;
     float boostCooldownTimer = 0;
     float weaponSwapTimer = 0;
@@ -116,6 +118,17 @@ public class Player : MonoBehaviour
             bool shooting = (currentWeapon.fullAuto) ? Input.GetMouseButton(0) : Input.GetMouseButtonDown(0);
             if (shooting) currentWeapon.Shoot();
             if (Input.GetKeyDown(KeyCode.R)) currentWeapon.Reload(); 
+        }
+    }
+
+    public void Hurt(float damage)
+    {
+        currentHealth -= damage;
+        Debug.Log("Player shot to " + currentHealth + "/" + maxHealth);
+        if(currentHealth <= 0)
+        {
+            //Die
+            MenuController.Instance.OnLoseScreen();
         }
     }
 }

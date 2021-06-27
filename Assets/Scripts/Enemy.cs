@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour
     public float viewDistance = 35.0f;
     public Transform eyeLocator;
     //[Range(0, 360)] public float viewAngle = 90;
-    public float projectileSpeed = 5;
+    public float projectileSpeed = 20;
     public GameObject projectile;
     public float health = 1;
 
@@ -40,7 +40,7 @@ public class Enemy : MonoBehaviour
     {
         //delete this
         Debug.Log("Enemy died!");
-        Destroy(this);
+        Destroy(this.gameObject);
         //make death sound
         //spawn blood effect
         //spawn ragdoll
