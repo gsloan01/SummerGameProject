@@ -50,11 +50,6 @@ public class MenuController : MonoBehaviour
         SFXSlider.value = sfxVolume;
     }
 
-    private void Update()
-    {
-        Debug.Log("Running");
-    }
-
     public void OnLoadGameScene(string sceneName)
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -116,10 +111,11 @@ public class MenuController : MonoBehaviour
 
     public void OnTitleScreen()
     {
-        titleScreen?.SetActive(true);
-
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+
+        titleScreen?.SetActive(true);
+
 
         optionsScreen?.SetActive(false);
         pauseScreen?.SetActive(false);
