@@ -4,15 +4,22 @@ using UnityEngine;
 
 public class SprayWeapon : PlayerWeapon
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public float shrapnelAmount = 5;
 
-    // Update is called once per frame
-    void Update()
+    public override void Shoot()
     {
-        
+        if (cooldownTimer <= 0)
+        {
+            if (magCount > 0)
+            {
+                for (int i = 0; i < shrapnelAmount; i++)
+                {
+                    SpawnProjectile();
+                }
+                magCount--;
+                Debug.Log("Shoot: " + magCount);
+                cooldownTimer = cooldown;
+            }
+        }
     }
 }
