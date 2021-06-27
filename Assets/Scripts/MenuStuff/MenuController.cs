@@ -11,6 +11,7 @@ public class MenuController : MonoBehaviour
     public GameObject optionsScreen;
     public GameObject pauseScreen;
     public MenuScreen winLoseScreen;
+    public MenuScreen titleScreenTest;
     public Transition transition;
 
     public AudioMixer audioMixer;
@@ -115,7 +116,7 @@ public class MenuController : MonoBehaviour
         Cursor.visible = true;
 
         titleScreen?.SetActive(true);
-
+        titleScreenTest?.GetButton("Start")?.gameObject.SetActive(true);
 
         optionsScreen?.SetActive(false);
         pauseScreen?.SetActive(false);
