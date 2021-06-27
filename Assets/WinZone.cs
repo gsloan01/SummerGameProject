@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeathZone : MonoBehaviour
+public class WinZone : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Colliding with " + other.gameObject.name);
         if (other.gameObject.CompareTag("Player"))
         {
-            Debug.Log("ded");
-            MenuController.Instance.OnLoseScreen();
+            Debug.Log("WINNNNN");
+            MenuController.Instance.OnWinScreen();
         }
     }
 }
