@@ -36,9 +36,12 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        //Checking if player is in the air or not
+        onGround = (rb.velocity.y <= 0.01f && rb.velocity.y >= -0.01f);
+
         //Check sprinting and set speed accordingly
         float currentSpeed = walkSpeed;
-        if (Input.GetKey(KeyCode.LeftShift)) currentSpeed = sprintSpeed;
+        if (Input.GetKey(KeyCode.LeftShift) && onGround) currentSpeed = sprintSpeed;
 
 
         //Movement controls
@@ -57,7 +60,6 @@ public class Player : MonoBehaviour
         Debug.DrawRay(transform.position, transform.forward);
 
         //Jump
-        onGround = (rb.velocity.y <= 0.01f && rb.velocity.y >= -0.01f);
         if (Input.GetKeyDown(KeyCode.Space) && onGround)
         {
             rb.AddForce(Vector3.up * jumpHeight, ForceMode.VelocityChange);
