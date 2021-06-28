@@ -57,7 +57,7 @@ public class Player : MonoBehaviour
         Debug.DrawRay(transform.position, transform.forward);
 
         //Jump
-        onGround = (rb.velocity.y == 0);
+        onGround = (rb.velocity.y <= 0.01f && rb.velocity.y >= -0.01f);
         if (Input.GetKeyDown(KeyCode.Space) && onGround)
         {
             rb.AddForce(Vector3.up * jumpHeight, ForceMode.VelocityChange);
