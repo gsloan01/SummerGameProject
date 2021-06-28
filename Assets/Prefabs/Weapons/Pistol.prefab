@@ -334,6 +334,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectileSpawn: {fileID: 3245869995348179277}
   projectile: {fileID: -4749197546766110120, guid: 3e36e6a212b131849af1b765679ea9c7, type: 3}
+  muzzleFlash: {fileID: 3714015510261436017, guid: 1d5f4e6c8be7d6f4bbb4ffc3625e4349, type: 3}
   cooldown: 0.75
   magSize: 10
   shotDeviance: 0.5

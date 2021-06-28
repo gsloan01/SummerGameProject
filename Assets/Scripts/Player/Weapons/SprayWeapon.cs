@@ -16,6 +16,7 @@ public class SprayWeapon : PlayerWeapon
                 {
                     SpawnProjectile();
                 }
+                if (muzzleFlash != null) Destroy(Instantiate(muzzleFlash, projectileSpawn), 0.1f);
                 magCount--;
                 Debug.Log("Shoot: " + magCount);
                 cooldownTimer = cooldown;

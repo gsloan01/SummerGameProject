@@ -6,14 +6,17 @@ public class PlayerWeapon : MonoBehaviour
 {
     public Transform projectileSpawn;
     public Projectile projectile;
+    public GameObject muzzleFlash;
 
     public float cooldown = 1;
-    public float magSize = 30;
+    public int magSize = 30;
     public float shotDeviance = 1;
+
+    public int roundsInMag { get { return magCount; } }
 
     public bool fullAuto = false;
 
-    protected float magCount;
+    protected int magCount;
     protected float cooldownTimer;
 
     void Start()
@@ -31,6 +34,7 @@ public class PlayerWeapon : MonoBehaviour
         if (cooldownTimer <= 0 && magCount > 0)
         {
             SpawnProjectile();
+            if (muzzleFlash != null) Destroy(Instantiate(muzzleFlash, projectileSpawn), 0.1f);
             magCount--;
             cooldownTimer = cooldown;
             Debug.Log("Shoot: " + magCount);

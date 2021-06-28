@@ -23,6 +23,7 @@ public class BurstWeapon : PlayerWeapon
                 if (shotTimer <= 0)
                 {
                     SpawnProjectile();
+                    if (muzzleFlash != null) Destroy(Instantiate(muzzleFlash, projectileSpawn), 0.1f);
                     magCount--;
                     shotTimer = timeBetweenBullets;
                     roundsShot++;
